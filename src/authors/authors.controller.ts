@@ -25,7 +25,7 @@ export class AuthorsController {
   }
 
   @Post()
-  async create(@Body() createAuthorDto: CreateAuthorDto) {
+  async create(@Body() createAuthorDto: CreateAuthorDto): Promise<Author> {
     return this.authorService.create(createAuthorDto);
   }
 
@@ -33,12 +33,12 @@ export class AuthorsController {
   async update(
     @Param('id') id: number,
     @Body() updateAuthorDto: UpdateAuthorDto,
-  ) {
+  ): Promise<Author> {
     return this.authorService.update(id, updateAuthorDto);
   }
 
   @Delete(':id')
-  remove(@Param(':id'), id: number){
-    return this.authorService.remove(id)
+  async remove(@Param(':id') id: number): Promise<void> {
+    return this.authorService.remove(id);
   }
 }
