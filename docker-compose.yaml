@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  library-api:
+    build: .
+    command: npm run start:dev --tsc --watch
+    environment:
+      - DB_TYPE=postgres
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
+      - PG_DB=library
+      - PG_PORT=5432
+      - PORT=3000
+      - PG_HOST=db
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/usr/src/app/src
+    depends_on:
+      - db
+
+  db:
+    container_name: library-db
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: library
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
