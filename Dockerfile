@@ -1,15 +1,13 @@
-FROM node:21 
+FROM node:18
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . . 
+COPY package*.json tsconfig*.json ./
 
-RUN npm install 
+RUN npm install
 
-RUN npm run build 
+COPY . .
 
-RUN rm -rf ./src
+RUN npm run build
 
-EXPOSE 3000
-
-CMD ["npm", "run", "start:prod"]
+CMD [ "npm", "run", "start:dev" ]
