@@ -9,6 +9,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { AuthorsService } from './authors.service';
+import { Author } from './entities/author.entity';
+import { CreateAuthorDto } from './dto/create-author.dto';
+import { UpdateAuthorDto } from './dto/update-author.dto';
 
 @Controller('authors')
 export class AuthorsController {
