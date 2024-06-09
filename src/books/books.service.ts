@@ -6,16 +6,11 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Author } from 'src/authors/entities/author.entity';
 import { Category } from 'src/categories/entities/category.entity';
-import { CategoriesService } from 'src/categories/categories.service';
-import { AuthorsService } from 'src/authors/authors.service';
-
 @Injectable()
 export class BooksService {
   constructor(
     @InjectRepository(Book)
     private readonly bookRepository: Repository<Book>,
-    private readonly categoryService: CategoriesService,
-    private readonly authorService: AuthorsService,
   ) {}
 
   async findAll(): Promise<Book[]> {
