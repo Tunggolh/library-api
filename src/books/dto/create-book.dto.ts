@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import {
   ArrayNotEmpty,
+  IsArray,
   IsDate,
   IsNumber,
   IsString,
@@ -16,10 +17,12 @@ export class CreateBookDto {
   @IsString()
   readonly isbn: string;
 
-  @ArrayNotEmpty()
+  @IsArray()
+  @IsNumber({}, { each: true })
   readonly authors: number[];
 
-  @ArrayNotEmpty()
+  @IsArray()
+  @IsNumber({}, { each: true })
   readonly categories: number[];
 
   @IsDate()

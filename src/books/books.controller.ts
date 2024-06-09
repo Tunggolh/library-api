@@ -21,7 +21,7 @@ export class BooksController {
     return this.bookService.findAll();
   }
 
-  @Get()
+  @Get(':id')
   async findOne(@Param('id') id: number): Promise<Book> {
     return this.bookService.findOne(id);
   }
@@ -34,8 +34,9 @@ export class BooksController {
   @Patch(':id')
   async update(
     @Param('id') id: number,
-    updateBookDto: UpdateBookDto,
+    @Body() updateBookDto: UpdateBookDto,
   ): Promise<Book> {
+    console.log('received dto', updateBookDto);
     return this.bookService.update(id, updateBookDto);
   }
 

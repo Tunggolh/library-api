@@ -69,29 +69,45 @@ export class BooksService {
   }
 
   async update(id: number, updateBookDto: UpdateBookDto): Promise<Book> {
-    const authors = updateBookDto.authors
-      ? await this.authorService.findByIds(updateBookDto.authors)
-      : undefined;
-
-    const categories = updateBookDto.categories
-      ? await this.categoryService.findByIds(updateBookDto.categories)
-      : undefined;
-
     const book = await this.findOne(id);
 
     if (!book) {
       throw new NotFoundException(`Book #${id} not found`);
     }
 
-    if (authors) {
-      book.authors = authors;
+    const authorIds = updateBookDto?.authors ?? false;
+    const categoryIds = updateBookDto?.categories ?? false;
+
+    let authors = [];
+    let categories = [];
+
+    if (authorIds) {
+      authors = await this.bookRepository.manager.findBy(Author, {
+        id: In(authorIds),
+      });
+      if (authors.length !== authorIds.length) {
+        throw new NotFoundException('Provide all valid author IDs');
+      }
     }
 
-    if (categories) {
-      book.categories = categories;
+    if (categoryIds) {
+      categories = await this.bookRepository.manager.findBy(Category, {
+        id: In(categoryIds),
+      });
+      if (categories.length !== categoryIds.length) {
+        throw new NotFoundException('Provide all valid category IDs');
+      }
     }
 
-    return this.bookRepository.save(book);
+    const updatedData = {
+      ...updateBookDto,
+      authors: authorIds ? authors : book.authors,
+      categories: categoryIds ? categories : book.categories,
+    };
+
+    const bookUpdated = Object.assign(book, updatedData);
+
+    return await this.bookRepository.save(bookUpdated);
   }
 
   async remove(id: number): Promise<void> {
