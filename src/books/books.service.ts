@@ -12,8 +12,8 @@ export class BooksService {
     private readonly bookRepository: Repository<Book>,
   ) {}
 
-  async findAll(paginationQuery): Promise<Book[]> {
-    return this.bookRepository.find();
+  async findAll(): Promise<Book[]> {
+    return this.bookRepository.find({ order: { id: 'asc' } });
   }
 
   async findOne(id: number): Promise<Book> {
@@ -46,8 +46,8 @@ export class BooksService {
     return this.bookRepository.save(book);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     const book = await this.findOne(id);
-    return this.bookRepository.remove(book);
+    this.bookRepository.remove(book);
   }
 }
