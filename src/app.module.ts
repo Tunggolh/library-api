@@ -7,7 +7,11 @@ import { dataSourceOptions } from './config/typeorm.config';
 import { CategoriesModule } from './categories/categories.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), AuthorsModule, CategoriesModule],
+  imports: [
+    TypeOrmModule.forRoot(dataSourceOptions),
+    AuthorsModule,
+    CategoriesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
