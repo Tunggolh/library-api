@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/app
+      - ./src:/usr/src/app/src
 
   db:
     container_name: library-db

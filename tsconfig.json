@@ -18,9 +18,9 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["./src/**/*", "migrations/**/*.ts"],
   "watchOptions": {
     "watchFile": "dynamicPriorityPolling",
-    "watchDirectory": "dynamicPriorityPolling"
+    "watchDirectory": "dynamicPriorityPolling",
+    "excludeDirectories": ["**node_modules", "dist"]
   }
 }
