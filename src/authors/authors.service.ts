@@ -13,7 +13,7 @@ export class AuthorsService {
   ) {}
 
   async findAll(): Promise<Author[]> {
-    return this.authorRepository.find();
+    return this.authorRepository.find({ order: { id: 'asc' } });
   }
 
   async findOne(id: number): Promise<Author> {
