@@ -1,4 +1,13 @@
-import { IsNumber, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayNotEmpty,
+  IsDate,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { Author } from 'src/authors/entities/author.entity';
+import { Category } from 'src/categories/entities/category.entity';
 
 export class CreateBookDto {
   @IsString()
@@ -7,9 +16,12 @@ export class CreateBookDto {
   @IsString()
   readonly isbn: string;
 
-  @IsNumber()
+  @ArrayNotEmpty()
   readonly authors: number[];
 
-  @IsNumber()
+  @ArrayNotEmpty()
   readonly categories: number[];
+
+  @IsDate()
+  readonly published_date: Date;
 }
